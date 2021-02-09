@@ -79,22 +79,18 @@ class STRIPS:
         action =  copy.deepcopy(self.selection(c_state))
         if len(action) >= 1:
             self.Executable[my_depth].append(action)
-                #print(self.Executable)
+ 
             
             for i in range(len(self.Executable[my_depth][-1])):
                 for module in self.modules:
                     my_depth = now_depth
                     if module.name == action[i]:
                         self.answer_list.append(action[i])
-                        #print(my_depth)
-                        #print("module_name:",module.name)
                         c_state = copy.deepcopy(self.now_state[my_depth])
-                        #print("before_state",c_state)
                         for state in module.a_list:
                             c_state.add(state)
                         for state in module.d_list:
                             c_state.discard(state)
-                        #print("c_state:",c_state)
                         if self.goal_state.issubset(c_state):
                             print("answer", self.answer_list)
                             sys.exit()
@@ -104,7 +100,6 @@ class STRIPS:
                                 pass
                             else:
                                 self.now_state[new_depth] = c_state
-                                #print(self.now_state)
                                 self.Loop(new_depth)
                         self.answer_list.remove(action[i])
                        
