@@ -120,8 +120,8 @@ def main():
     #最初の初期配置
     current_state = set(["clear_A", "on_table_A","clear_B", "on_table_B","clear_C", "on_table_C","arm_empty"])
     #ゴールの位置
-    goal_stete = set(["clear_C", "C_on_A", "on_table_A","clear_B", "on_table_B","arm_empty"])
-    strips = STRIPS(current_state,goal_stete,2)
+    goal_stete = set(["C_on_A","B_on_C", "on_table_A","clear_B","arm_empty"])
+    strips = STRIPS(current_state,goal_stete,4)
     strips.global_loop()
 
 main()
