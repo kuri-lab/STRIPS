@@ -44,12 +44,6 @@ class STRIPS:
         self.put_down_B = Module("put_down_B", c_list=["holding_B"], a_list=["on_table_B","arm_empty"], d_list=["holding_B"], group="action")
         self.put_down_C = Module("put_down_C", c_list=["holding_C"], a_list=["on_table_C","arm_empty"], d_list=["holding_C"], group="action")
         
-
-
-
-        #self.recognize_bottle = Module("recognize_bottle", c_list=["object_observed"], a_list=["bottle_observed"], d_list=["object_observed"], group="belief")
-        #self.recognize_cup = Module("recognize_cup", c_list=["object_observed"], a_list=["cup_observed"], d_list=["object_observed"], group="belief")
-        
         self.modules = [self.pick_up_A,self.pick_up_B,self.pick_up_C,
                         self.stack_A_on_B,self.stack_A_on_C,self.stack_B_on_A,self.stack_B_on_C,self.stack_C_on_A,self.stack_C_on_B,
                        self.unstack_A_on_B, self.unstack_A_on_C, self.unstack_B_on_A,self.unstack_B_on_C,self.unstack_C_on_A,self.unstack_C_on_B,
@@ -62,7 +56,6 @@ class STRIPS:
             c_list_dict = set(module.c_list)
             if c_list_dict.issubset(c_state):
                 module_dict_action[str(module.name)] = module.level
-        #print(module_dict_action)
 
         return module_dict_action
 
@@ -79,22 +72,18 @@ class STRIPS:
         action =  copy.deepcopy(self.selection(c_state))
         if len(action) >= 1:
             self.Executable[my_depth].append(action)
-                #print(self.Executable)
+ 
             
             for i in range(len(self.Executable[my_depth][-1])):
                 for module in self.modules:
                     my_depth = now_depth
                     if module.name == action[i]:
                         self.answer_list.append(action[i])
-                        #print(my_depth)
-                        #print("module_name:",module.name)
                         c_state = copy.deepcopy(self.now_state[my_depth])
-                        #print("before_state",c_state)
                         for state in module.a_list:
                             c_state.add(state)
                         for state in module.d_list:
                             c_state.discard(state)
-                        #print("c_state:",c_state)
                         if self.goal_state.issubset(c_state):
                             print("answer", self.answer_list)
                             sys.exit()
@@ -104,7 +93,6 @@ class STRIPS:
                                 pass
                             else:
                                 self.now_state[new_depth] = c_state
-                                #print(self.now_state)
                                 self.Loop(new_depth)
                         self.answer_list.remove(action[i])
                        
