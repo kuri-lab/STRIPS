@@ -58,7 +58,6 @@ class STRIPS:
                 module_dict_action[str(module.name)] = module.level
 
         return module_dict_action
-
     
     def selection(self, c_state):
         action = self.make_dict(c_state)
@@ -71,8 +70,7 @@ class STRIPS:
         c_state = copy.deepcopy(self.now_state[my_depth])
         action =  copy.deepcopy(self.selection(c_state))
         if len(action) >= 1:
-            self.Executable[my_depth].append(action)
- 
+            self.Executable[my_depth].append(action) 
             
             for i in range(len(self.Executable[my_depth][-1])):
                 for module in self.modules:
@@ -96,9 +94,6 @@ class STRIPS:
                                 self.Loop(new_depth)
                         self.answer_list.remove(action[i])
                        
-        
-    
-    
     def global_loop(self):
         self.now_state[0] = self.current_state
         self.Loop(0)
